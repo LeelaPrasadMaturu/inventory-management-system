@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="/css/products.css">
+    <script>
+        function toggleUpdateForm(productId) {
+            var form = document.getElementById('update-form-' + productId);
+            form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Add Product</h2>
+    <form action="/products/add" method="post">
+        <input type="text" name="name" placeholder="Product Name" required>
+        <input type="text" name="description" placeholder="Product Description" required>
+        <input type="number" name="quantity" placeholder="Quantity" required>
+        <select name="location" required>
+            <% locations.forEach(location => { %>
+                <option value="<%= location._id %>"><%= location.name %></option>
+            <% }) %>
+        </select>
+        <button type="submit">Add</button>
+    </form>
+    
+    <h1>Products</h1>
+    <ul>
+        <% products.forEach(product => { %>
+            <li>
+                <div>
+                    <strong><%= product.name %></strong>
+                    <p><%= product.description %> - Quantity: <%= product.quantity %></p>
+                    <% if (product.location) { %>
+                        <p>Location: <%= product.location.name %></p>
+                    <% } else { %>
+                        <p>Location: Not assigned</p>
+                    <% } %>
+                </div>
+                <button class="delete-button" onclick="event.preventDefault(); document.getElementById('delete-form-<%= product._id %>').submit();">Delete</button>
+                <button class="update-toggle-button" onclick="toggleUpdateForm('<%= product._id %>')">Update</button>
+                
+                <form id="delete-form-<%= product._id %>" action="/products/<%= product._id %>/delete" method="post" style="display: none;"></form>
+                
+                <form id="update-form-<%= product._id %>" action="/products/<%= product._id %>/update" method="POST" class="update-form" style="display: none;">
+                    <input type="hidden" name="id" value="<%= product._id %>">
+                    <input type="text" name="name" value="<%= product.name %>" required>
+                    <input type="text" name="description" value="<%= product.description %>" required>
+                    <input type="number" name="quantity" value="<%= product.quantity %>" required>
+                    <select name="location" required>
+                        <% locations.forEach(location => { %>
+                            <option value="<%= location._id %>" <%= product.location && product.location._id === location._id ? 'selected' : '' %>><%= location.name %></option>
+                        <% }) %>
+                    </select>
+                    <button type="submit">Update</button>
+                </form>
+                
+            </li>
+        <% }) %>
+    </ul>
+   
+    <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

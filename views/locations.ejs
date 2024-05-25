@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations</title>
+    <link rel="stylesheet" href="/css/locations.css">
+</head>
+<body>
+    <h2>Add Location</h2>
+    <div>
+        <form action="/locations/add" method="post">
+            <input type="text" name="name" placeholder="Location Name" required>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    
+    <h1>Available Locations</h1>
+    <ul>
+        <% if (locations.length > 0) { %>
+            <% locations.forEach(location => { %>
+                <li>
+                    <h2><%= location.name %></h2>
+                    <% if (location.products.length > 0) { %>
+                        <ul>
+                            <% location.products.forEach(product => { %>
+                                <li>
+                                    <strong><%= product.name %></strong> - <%= product.description %> - Quantity: <%= product.quantity %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    <% } else { %>
+                        <p>No products found for this location.</p>
+                    <% } %>
+                    <form action="/locations/<%= location._id %>/delete" method="post">
+                        <button type="submit" class="delete-button">Delete Location</button>
+                    </form>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <p>No locations found.</p>
+        <% } %>
+    </ul>
+    <a href="/dashboard">Back to Dashboard</a>
+
+</body>
+</html>

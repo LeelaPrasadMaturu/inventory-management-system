@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #1e2833;
+    padding: 20px 0;
+    color: #fff;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav a.btn {
+    background-color: #fff;
+    color: #1e2833;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+nav a.btn:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #1e2833;
+    color: #fff;
+}
+
+footer p {
+    margin: 0;
+}
+
+#name {
+    display: block;
+    text-align: center;
+    margin-top: 20px; /* Adjust as needed */
+}
+body {
+      font-family: 'Work Sans', sans-serif;
+    }
+
+    .faq-heading {
+      border-bottom: 2px solid #272626;
+      padding: 20px 60px;
+    }
+
+    .faq-container {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .hr-line {
+      width: 60%;
+      margin: auto;
+      border-top: 1px solid #ccc;
+    }
+
+    /* Style the buttons that are used to open and close the faq-body */
+    .faq-page {
+      color: #515251;
+      cursor: pointer;
+      padding: 30px 20px;
+      width: 60%;
+      border: none;
+      outline: none;
+      transition: 0.4s;
+      margin: auto;
+      background-color: #fff;
+    }
+
+    .faq-body {
+      margin: auto;
+      width: 50%;
+      padding: 0;
+      display: none; /* Initially hide FAQ body */
+      border-bottom: 1px solid #ccc;
+    }
+
+    /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+    .active,
+    .faq-page:hover {
+      background-color: #F9F9F9;
+    }
+
+    /* Style the faq-body panel. Note: hidden by default */
+    .faq-body {
+      padding: 0 18px;
+      background-color: white;
+      overflow: hidden;
+    }
+
+    .faq-page:after {
+      content: '\02795'; /* Unicode character for "plus" sign (+) */
+      font-size: 13px;
+      color: #777;
+      float: right;
+      margin-left: 5px;
+    }
+
+    .active:after {
+      content: "\2796"; /* Unicode character for "minus" sign (-) */
+    }
+ </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Inventory Management System</h1>
+            <nav>
+                <a href="/home" class="btn">Home</a>
+                <a href="/products" class="btn">Products</a>
+                <a href="/locations" class="btn">Locations</a>
+                <!-- <a href="#" class="btn">FAQ</a> -->
+                <a href="/aboutus.html" class="btn">About Us</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <main>
+            <h1 class="faq-heading">FAQ'S</h1>
+            <section class="faq-container" id="faq-container">
+              <!-- FAQs will be dynamically generated here -->
+            </section>
+          </main>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const faqs = [
+                    {
+                        question: "What is Inventory Management?",
+                        answer: "Inventory management involves overseeing the storage, tracking, and control of goods, materials, and products within a business or organization. It aims to optimize inventory levels to ensure sufficient stock is available for fulfilling customer demand while minimizing excess inventory and associated costs."
+                    },
+                    {
+                        question: "Why is Inventory Management important for businesses?",
+                        answer: "Effective inventory management is crucial for businesses to maintain adequate stock levels, reduce carrying costs, prevent stockouts, streamline operations, and ultimately improve customer satisfaction and profitability."
+                    },
+                    {
+                        question: "What are the key components of an Inventory Management System?",
+                        answer: "An Inventory Management System typically includes inventory tracking, stock level monitoring, order management, supplier management, warehouse management, and reporting functionalities."
+                    },
+                    {
+                        question: "How does an Inventory Management System help in cost reduction?",
+                        answer: "By providing real-time insights into inventory levels, demand patterns, and stock movement, an Inventory Management System enables businesses to optimize inventory levels, minimize excess stock, reduce storage costs, and prevent stockouts, thereby lowering overall inventory carrying costs."
+                    },
+                    {
+                        question: "What are the challenges of implementing an Inventory Management System?",
+                        answer: "Some common challenges include data accuracy issues, integration with existing systems, employee training, initial setup costs, and selecting the right software solution that meets the specific needs of the business."
+                    },
+                    {
+                        question: "How can businesses choose the right Inventory Management System?",
+                        answer: "Businesses should consider factors such as their industry, business size, inventory complexity, scalability, budget, user-friendliness, integration capabilities, and customer support when selecting an Inventory Management System."
+                    }
+                ];
+    
+                const faqContainer = document.getElementById('faq-container');
+                faqs.forEach(faq => {
+                    const faqDiv = document.createElement('div');
+                    faqDiv.classList.add('faq-item');
+                    faqDiv.innerHTML = `
+                        <h1 class="faq-page">${faq.question}</h1>
+                        <div class="faq-body">
+                            <p>${faq.answer}</p>
+                        </div>
+                        <hr class="hr-line">
+                    `;
+                    faqContainer.appendChild(faqDiv);
+                });
+    
+                // Add event listeners to all FAQ questions
+                const faqPages = document.querySelectorAll('.faq-page');
+                faqPages.forEach(page => {
+                    page.addEventListener('click', function() {
+                        const body = this.nextElementSibling;
+                        this.classList.toggle('active');
+                        if (body.style.display === 'block') {
+                            body.style.display = 'none';
+                        } else {
+                            body.style.display = 'block';
+                        }
+                    });
+                });
+            });
+        </script>
+    <footer>
+        <p>&copy; 2024 Inventory Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
