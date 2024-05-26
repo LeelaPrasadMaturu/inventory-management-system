@@ -7,7 +7,8 @@ const productRoutes = require('./routes/productRoutes');
 const locationRoutes = require('./routes/locationRoutes');
 const dotenv = require('dotenv');
 
-dotenv.config(); // Load environment variables from .env file
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,6 +37,7 @@ app.use(express.static('public'));
 app.get('/home', (req, res) => {
     res.render('index', { user: req.session.user });
 });
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/home.html");
 });
