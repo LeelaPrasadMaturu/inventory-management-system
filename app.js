@@ -5,16 +5,22 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const locationRoutes = require('./routes/locationRoutes');
+const dotenv = require('dotenv');
+
+dotenv.config(); // Load environment variables from .env file
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/inventory', {
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+}).then(() => {
+    console.log('MongoDB connected');
+}).catch(err => {
+    console.error('MongoDB connection error:', err);
+});
 
 // Middleware
 app.use(bodyParser.json());
@@ -27,18 +33,17 @@ app.use(session({
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-// Routes
-app.use('/users', userRoutes);
-app.use('/products', productRoutes);
-app.use('/locations', locationRoutes);
-
+app.get('/home', (req, res) => {
+    res.render('index', { user: req.session.user });
+});
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/home.html");
 });
 
-app.get('/home', (req, res) => {
-    res.render('index', { user: req.session.user });
-});
+// Routes
+app.use('/users', userRoutes);
+app.use('/products', productRoutes);
+app.use('/locations', locationRoutes);
 
 app.get('/dashboard', (req, res) => {
     if (!req.session.user) {
