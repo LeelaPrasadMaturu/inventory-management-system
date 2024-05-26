@@ -11,13 +11,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
+mongoose.connect(process.env.MONGODB_URI).then(() => {
     console.log('MongoDB connected');
 }).catch(err => {
     console.error('MongoDB connection error:', err);
@@ -27,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'yourSecret',
+    secret: process.env.SESSION_SECRET || 'yourSecret',
     resave: false,
     saveUninitialized: true
 }));
