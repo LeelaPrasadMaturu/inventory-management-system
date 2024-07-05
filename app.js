@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/locations', locationRoutes);
-
+// app.use('/locations', locationRoutes) tells the main Express application to use the locationRoutes router for any request that starts with /locations.
 app.get('/dashboard', (req, res) => {
     if (!req.session.user) {
         return res.status(401).redirect('/login');
